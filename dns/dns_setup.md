@@ -1,13 +1,13 @@
 # DNS Setup
 In Order for Direct IPv6 Connectivity to work, an appropriate AAAA (IPv6) Record Must be present for the Application Hostname:
 ```
-application01          IN      AAAA    2001:db8:0000:0001:0000:0000:0001:0001
+whoami          IN      AAAA    2001:db8:0000:0001:0000:0000:0001:0001
 ```
 
 For IPv4 Connectivity, it is the IPv4 Address of the `snid` Host that must be Entered.
 In this Tutorial, since `snid` is assumed to be running on the Podman Host itself, this simply means creating an A Record for the Podman Host itself:
 ```
-application01          IN      A    198.51.100.10
+whoami          IN      A    198.51.100.10
 ```
 
 > **Warning**  
@@ -100,36 +100,47 @@ Then it's pretty much a standard BIND Zone Configuration File:
 $ORIGIN MYDOMAIN.TLD.
 $TTL    5m
 @       IN      SOA	ns1.MYDOMAIN.TLD. ns2.MYDOMAIN.TLD. (
-	                      YYYYMMDD01					; Serial (10 digits)
-                        604800							; Refresh
-                        3600							  ; Retry
-			                  ;86400							; Retry
-                        2419200							; Expire
-                        604800)							; Negative Cache TTL
+	                YYYYMMDD01				; Serial (10 digits)
+                        604800					; Refresh
+                        3600					; Retry
+			;86400					; Retry
+                        2419200					; Expire
+                        604800)					; Negative Cache TTL
 ;
 
 ; Authoritative nameservers
-			                  IN      NS      ns1
-			                  IN	    NS	    ns2
-
-; Defaults 
-                        IN      A       198.51.100.10
+			IN              NS              ns1
+			IN	        NS	        ns2
 
 ; Nameservers
-ns1                     IN      A       198.51.100.10
-ns1			                IN	    AAAA	  2001:db8:0000:0001:0000:0000:0000:0003
+ns1                     IN              A               198.51.100.10
+ns1			IN	        AAAA	        2001:db8:0000:0001:0000:0000:0000:0003
 
 ; For now NS2 is just the same as NS1
-ns2                     IN      A       198.51.100.10
-ns2			                IN	    AAAA	  2001:db8:0000:0001:0000:0000:0000:0003
+ns2                     IN              A               198.51.100.10
+ns2			IN	        AAAA	        2001:db8:0000:0001:0000:0000:0000:0003
 
 ; ##########################################################################################
 
-podmanhost01		        IN	    A	      198.51.100.10
-podmanhost01        	  IN	    AAAA	  2001:db8:0000:0001:0000:0000:0000:0100
+; Defaults 
+                        IN              A               198.51.100.10
 
-whoami			            IN	    A       198.51.100.10
-whoami			            IN      AAAA    2001:db8:0000:0001:0000:0000:0001:0001
+; ##########################################################################################
+
+; Podman Host
+
+podmanhost01		IN	        A	        198.51.100.10
+podmanhost01        	IN	        AAAA	        2001:db8:0000:0001:0000:0000:0000:0100
+
+; ##########################################################################################
+
+; Applications
+
+; ...
+; ...
+
+whoami			IN	        A               198.51.100.10
+whoami			IN              AAAA            2001:db8:0000:0001:0000:0000:0001:0001
 
 ```
 
