@@ -130,11 +130,11 @@ view "internal" {
                 type forward;
                 forward only;
                 forwarders {
-			                  // Use Google Public Recursive Name Servers
+			// Use Google Public Recursive Name Servers
                         8.8.8.8;
-			                  8.8.4.4;
-			                  2001:4860:4860::8888;
-			                  2001:4860:4860::8844;
+			8.8.4.4;
+			2001:4860:4860::8888;
+			2001:4860:4860::8844;
                 };
         };
 
