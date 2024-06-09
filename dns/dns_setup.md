@@ -78,6 +78,8 @@ BIND Local DNS Server:
 ## Enable DNSSec
 To enable DNSSec you can however follow this [Excellent Tutorial](https://www.talkdns.com/articles/a-beginners-guide-to-dnssec-with-bind-9/).
 
+Remember to register the `DS` Key in your Registrar Control Panel for your Domain !
+
 ## Enable DNS over TLS
 DNS Over TLS can be Enabled in `/etc/bind/named.conf` by adding a few Lines and Certificates (I manage them using `certbot`, your Mileage might vary):
 ```
